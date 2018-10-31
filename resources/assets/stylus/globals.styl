@@ -1,0 +1,129 @@
+body
+    color black
+    font-size 16px
+    font1()
+    line-height 1
+
+.wrap
+    margin 0 auto
+    max-width 1260px
+    padding-left: 30px
+    padding-right: 30px
+
+    @media(max-width 925px)
+        padding-left 20px
+        padding-right 20px
+
+    @media(max-width 599px)
+        padding-left 10px
+        padding-right 10px
+
+.small-wrap
+    margin 0 auto
+    max-width 1000px
+    padding 0 10px
+
+.dark
+    color $white
+
+.light
+    color $lightdark
+
+.lightbrown
+    color $lightbrown
+
+p
+    margin 10px 0
+    line-height 2.1
+
+
+.dark p
+    color $greyTextColor
+
+
+h1
+    font2()
+    font-size  responsive 30px 56px
+    letter-spacing 2.8px
+    line-height 1.2
+    margin 10px 0
+    margin-bottom: 25px
+
+    @media(max-width: 599px)
+        margin: 4px 0 25px
+
+.h2
+    font2()
+    font-size responsive 19px 24px
+    letter-spacing 1.2px
+    line-height 1.2
+    margin 10px 0
+
+    @media(max-width: 599px)
+        margin: 4px 0
+
+.h3
+    font2()
+    font-size 14px
+    letter-spacing 2.1px
+    line-height 1
+    color $lightbrown
+    margin 10px 0
+
+    @media(max-width: 599px)
+        margin: 4px 0
+
+.h4
+    font2()
+    font-size  responsive 26px 46px
+    letter-spacing 2.8px
+    line-height 1.2
+    margin-top 10px
+    margin-bottom: 50px
+
+    @media(max-width: 599px)
+        margin: 4px 0 25px
+
+.split
+    display flex
+
+    & > *
+        flex 0 0 50%
+
+.adv-split
+    display flex
+    position relative
+
+    & > *
+        flex 0 0 50%
+        align-self center
+
+.left-box
+        background-color $lightdark
+        padding 130px 115px
+        margin-left -90px
+        margin-top: -170px
+        display: flex
+        width 550px
+        max-width 590px
+
+        flex-direction column
+
+section
+    width 100%
+
+.bc-d
+    background-color $dark
+
+.top
+    padding-top 160px
+
+    @media(max-width 850px)
+        padding-top: 140px
+
+
+
+.first
+    margin-top: 25px
+.tac
+    text-align center
