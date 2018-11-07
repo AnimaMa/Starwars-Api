@@ -139,6 +139,15 @@ body {
     padding-right: 10px;
   }
 }
+a {
+  color: #9acd32;
+}
+.highlight {
+  color: #f08080;
+  font-size: 15px;
+  margin-bottom: 10px;
+  display: inline-block;
+}
 .small-wrap {
   margin: 0 auto;
   max-width: 1000px;
@@ -306,84 +315,42 @@ section {
 .tac {
   text-align: center;
 }
-.welcome {
-  background-color: #1a252e;
-  height: 100vh;
-  width: 100%;
-  min-height: 650px;
-  padding-top: 100px;
-  background-image: url("/img/home-bg.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+body {
+  padding-top: 40px;
+  transition: all 0.3s;
 }
-.welcome > .wrap {
-  height: 100%;
-  position: relative;
+.button {
+  display: block;
+  width: 100px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+.button.red {
+  background-color: #f08080;
+}
+.flex {
   display: -ms-flexbox;
   display: box;
   display: flex;
-  -o-box-align: center;
-  align-items: center;
-  -o-box-pack: start;
-  justify-content: flex-start;
-  padding-bottom: 140px;
+  min-width: 500px;
+  max-width: 700px;
 }
-.welcome .welcome-text {
-  max-width: 600px;
-}
-.welcome .button {
-  margin-right: 15px;
-  margin-bottom: 5px;
-}
-.welcome .short-info {
-  position: absolute;
-  bottom: 30px;
-  left: 0;
-}
-.welcome .short-info .wrap {
-  display: -ms-flexbox;
-  display: box;
-  display: flex;
-  -o-box-pack: justify;
-  justify-content: space-between;
-}
-.welcome .short-info .info {
-  position: relative;
-  margin: 0;
-  margin-right: 85px;
-  box-flex: 1;
+.box {
   -o-box-flex: 1;
   box-flex: 1;
-  flex: 0 1 400px;
-  padding-left: 30px;
+  flex: 0 0 50%;
 }
-.welcome .short-info .info:last-child {
-  margin-right: 0;
+.box .row {
+  padding: 10px 10px;
+  border-bottom: 1px #d3d3d3 solid;
+  width: 100%;
+  padding-bottom: 5px;
 }
-.welcome .short-info .info .num {
-  position: absolute;
-  left: 0;
-  top: 5px;
+.bold {
+  font-weight: bold;
 }
-.welcome .short-info .info:hover h2 {
-  color: #bf9474;
-}
-@media (max-width: 1000px) {
-  .welcome {
-    min-height: 500px;
-  }
-  .welcome > .wrap {
-    padding-bottom: 40px;
-  }
-  .welcome .short-info {
-    display: none;
-  }
-}
-@media (max-width: 500px) {
-  .welcome {
-    max-height: 620px;
-  }
+.is-danger {
+  background-color: #db7093;
 }
 
 /*# sourceMappingURL=main.css.map */

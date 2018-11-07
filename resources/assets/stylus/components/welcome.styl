@@ -1,67 +1,43 @@
-.welcome
-    background-color $lightdark
-    height 100vh
-    width 100%
-    min-height 650px
-    padding-top: 100px
-    background-image url("/img/home-bg.jpg")
-    background-size cover
-    background-repeat no-repeat
-    background-position center
+body {
+    padding-top: 40px;
+    transition: all 0.3s;
+}
 
+.button {
+    display: block;
+    width: 100px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
 
-    > .wrap
-        height: 100%
-        position relative
-        display: flex
-        align-items: center
-        justify-content: flex-start
-        padding-bottom: 140px;
+.button.red {
+    background-color: lightcoral;
+}
 
-    .welcome-text
-        max-width: 600px
+.flex {
+    display: flex;
+    min-width: 500px;
+    max-width: 700px;
 
-    .button
-        margin-right 15px
-        margin-bottom: 5px
+}
 
-    .short-info
-        position absolute
-        bottom 30px
-        left 0
-        .wrap
-            display flex
-            justify-content space-between
+.box {
+    flex: 0 0 50%;
+}
 
-        .info
-            position relative
-            margin 0
-            margin-right: 85px;
-            box-flex: 1;
-            flex: 0 1 400px;
-            padding-left: 30px
+.box .row {
+    padding: 10px 10px;
+    border-bottom: 1px lightgray solid;
+    width: 100%;
+    padding-bottom: 5px;
+}
 
-            &:last-child
-                margin-right 0
+.bold {
+    font-weight: bold;
+}
 
-            .num
-                position: absolute
-                left: 0
-                top: 5px
-
-            &:hover
-                h2
-                    color $lightbrown
-
-    @media (max-width: 1000px)
-        min-height 500px
-
-        > .wrap
-            padding-bottom: 40px
-
-        .short-info
-            display: none
-
-    @media(max-width: 500px)
-        max-height 620px
-
+.is-danger
+    background-color palevioletred
+/*.box .row:nth-child(2) {*/
+/*background-color: lightblue;*/
+/*}*/
