@@ -20,7 +20,7 @@
 
     <router-link to="/">Home</router-link>
     |
-    <router-link to="/star">Star</router-link>
+    <router-link to="/searching">Searching</router-link>
 
 
     <router-view></router-view>

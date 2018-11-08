@@ -5,7 +5,7 @@ const axios = require('axios');
 
 import Home from './components/Home.vue';
 import Detail from './components/Detail.vue';
-import Film from './components/Film.vue';
+import Search from './components/Search.vue';
 import VueHeader from './components/VueHeader.vue';
 
 window.Vue = Vue;
@@ -16,6 +16,7 @@ const startUrlApi = 'https://swapi.co/api/';
 const routes = [
     {path: '/', component: Home},
     {path: '/:category/:id', component: Detail},
+    {path: '/searching', component: Search}
 
 
 ];
@@ -74,7 +75,7 @@ const app = new Vue({
         VueHeader: require('./components/VueHeader.vue'),
         Detail: require('./components/Detail.vue'),
         Home: require('./components/Home.vue'),
-        Film: require('./components/Film.vue'),
+        Search: require('./components/Search.vue'),
     },
 
     // computed: {

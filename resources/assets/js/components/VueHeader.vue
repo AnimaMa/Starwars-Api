@@ -14,6 +14,7 @@
                 </select>
                 <input type="number" v-model="inputId" id="id" class="id">
                 <button @click="sendData">find</button>
+
             </label>
         </div>
 
@@ -39,12 +40,17 @@
             return {
                 inputId: '',
                 inputCategory: '',
-                errorMessage: ''
+                errorMessage: '',
+                people: [ ]
 
             }
         },
+        created() {
+        },
 
         methods: {
+
+
             sendData() {
                 if (this.inputId === ''  &&  this.inputCategory === '' || this.inputId === '' && this.inputCategory || this.inputId && this.inputCategory === '' ) {
                     this.errorMessage = 'nevybrali ste vsetko';

@@ -29,8 +29,8 @@
                     <div v-if=" Array.isArray(data[prop])">
                     <span v-for="url in data[prop]">
                         |
-                        <router-link :to="detailUrl(getCategoryFromUrl(url), getIdFromUrl(url))"
-                                     v-text="getIdFromUrl(url)">
+                        <router-link :to="detailUrl(getCategoryFromUrl(url), getValueFromUrl(url))"
+                                     v-text="getValueFromUrl(url)">
                         </router-link>
                     </span>
                     </div>
@@ -68,20 +68,23 @@
                 properties: [],
                 noArrayData: [],
                 forbiddenProperties: ['created', 'edited', 'url'],
-                categoryValue: this.$route.params.category,
-                idValue: this.$route.params.id,
+                category: this.$route.params.category,
+                value: this.$route.params.id,
                 data: '',
                 errorDetail: '',
                 loading: false,
                 errorLoad: false,
-                people: []
+                people: [],
+                valueWithoutSpaces: '',
+                startUrlApi: 'https://swapi.co/api/',
+                onlyNum: '^[0-9]*$'
             }
         },
 
         watch: {
             '$route'(to, from) {
-                this.categoryValue = this.$route.params.category;
-                this.idValue = this.$route.params.id;
+                this.category = this.$route.params.category;
+                this.value = this.$route.params.id;
                 this.getData();
             }
         },
@@ -89,14 +92,38 @@
         computed: {
 
 
-
             urlApi: function () {
-                const startUrlApi = 'https://swapi.co/api/';
+                console.log(this.category);
+                console.log(this.value);
+                console.log('urlappi');
 
-                if (this.categoryValue && this.idValue) {
+                if (this.category && this.value) {
+
+                    let end;
                     this.error = false;
-                    let end = this.categoryValue + '/' + this.idValue;
-                    return startUrlApi + end;
+                    console.log(typeof this.value);
+
+                    if ( ! this.value.match(this.onlyNum)) {
+                        console.log('value is not number');
+
+                        if (this.value.indexOf(' ') >= 0) {
+                            console.log('space');
+                            this.valueWithoutSpaces = this.value.split(' ').join('%');
+                        }
+                        console.log('this.valueWithoutSpaces ' + this.valueWithoutSpaces);
+                        let end = this.category + '/?' + this.valueWithoutSpaces;
+                        console.log(this.startUrlApi + end);
+                        this.getData(this.startUrlApi + end);
+                        console.log('hore');
+                        return this.startUrlApi + end;
+
+                    } else {
+                        let end = this.category + '/' + this.value;
+                        console.log(this.startUrlApi + end);
+                        console.log('url id');
+                        return this.startUrlApi + end;
+                    }
+
                 } else {
                     this.errorMessage = 'vyplnte udaje';
                 }
@@ -106,42 +133,10 @@
 
         created() {
             this.getData();
-            this.getNames();
 
         },
 
         methods: {
-
-
-            getNames() {
-                let url = 'https://swapi.co/api/people/';
-                axios.get(url)
-                    .then((response) => {
-                        let results = response.data.results;
-                        console.log(results);
-
-
-                        for(let pro  in results) {
-                            this.people.push(results[pro].name);
-                            console.log(this.people);
-
-                            console.log(results[pro].name);
-
-
-                            if (results.hasOwnProperty(pro )) {
-                                console.log(pro.name);
-                            }
-                        }
-
-
-                    })
-                    .catch((error) => {
-
-
-                    });
-
-            },
-
 
             errorHandle(detail) {
                 this.error = true;
@@ -159,44 +154,69 @@
                 return '/' + category + '/' + id;
             },
 
-            getIdFromUrl(url) {
+            getValueFromUrl(url) {
+                console.log(url + "VAL");
+
                 let urlWithoutSlash = url.substring(0, url.length - 1);
+                console.log('URL' + urlWithoutSlash);
                 return urlWithoutSlash.substring(urlWithoutSlash.lastIndexOf('/') + 1);
 
             },
 
             getCategoryFromUrl(url) {
+                console.log(url  );
                 let splitUrl = url.split('/');
                 return splitUrl[4];
             },
 
             getData(url) {
 
-                if (!this.categoryValue && !this.idValue) {
-                    return;
+
+                console.log('detail data');
+                console.log('DATAURL' + url);
+                // console.log(this.urlApi + 'APII');s
+                console.log('detail data');
+                console.log('CATEGORY' + this.category);
+                // console.log(' APIURL' + this.urlApi);
+
+                if(url){
+
+                    console.log('MAME URL');
+                } else {
+
+
+                    if (this.category && this.value) {
+                        console.log(this.value + ' value');
+                        console.log('GEEEEEEEEEET');
+                        this.loading = true;
+                        axios.get(this.urlApi)
+                            .then((response) => {
+                                this.loading = false;
+                                console.log(response);
+                                console.log('set');
+
+                                this.error = false;
+                                this.data = response.data;
+                                this.setProperties();
+                            })
+                            .catch((error) => {
+                                this.loading = false;
+                                this.errorLoad = true;
+
+                                if (error.response.data.detail) {
+                                    this.errorDetail = error.response.data.detail;
+                                    this.errorHandle(this.errorDetail);
+                                }
+
+                            });
+                    } else {
+                        this.erro = true;
+                        this.errorMessage = 'error v getData';
+                        return;
+                    }
                 }
 
-                if (this.categoryValue && this.idValue) {
-                    this.loading = true;
-                    axios.get(this.urlApi)
-                        .then((response) => {
-                            this.loading = false;
 
-                            this.error = false;
-                            this.data = response.data;
-                            this.setProperties();
-                        })
-                        .catch((error) => {
-                            this.loading = false;
-                            this.errorLoad = true;
-
-                            if (error.response.data.detail) {
-                                this.errorDetail = error.response.data.detail;
-                                this.errorHandle(this.errorDetail);
-                            }
-
-                        });
-                }
             },
 
             setProperties() {

@@ -352,5 +352,8 @@ body {
 .is-danger {
   background-color: #db7093;
 }
+.select {
+  width: 220px;
+}
 
 /*# sourceMappingURL=main.css.map */
