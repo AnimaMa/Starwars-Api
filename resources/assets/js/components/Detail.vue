@@ -77,7 +77,13 @@
                 people: [],
                 valueWithoutSpaces: '',
                 startUrlApi: 'https://swapi.co/api/',
-                onlyNum: '^[0-9]*$'
+                regexOnlyNumbers: '^[0-9]+$',
+                endOfUrlOfUrl: '',
+                name: '',
+                url: '',
+                neededUrl: '',
+                replacementOfSpace: '%20',
+                valueIsId: false
             }
         },
 
@@ -91,41 +97,40 @@
 
         computed: {
 
-
             urlApi: function () {
-                console.log(this.category);
-                console.log(this.value);
-                console.log('urlappi');
+                console.log('URLAPI');
+
 
                 if (this.category && this.value) {
-
-                    let end;
                     this.error = false;
-                    console.log(typeof this.value);
 
-                    if ( ! this.value.match(this.onlyNum)) {
-                        console.log('value is not number');
+                    if (!this.value.match(this.regexOnlyNumbers)) {
+                        console.log('VALUE IS NOT NUMBER');
 
                         if (this.value.indexOf(' ') >= 0) {
-                            console.log('space');
-                            this.valueWithoutSpaces = this.value.split(' ').join('%');
-                        }
-                        console.log('this.valueWithoutSpaces ' + this.valueWithoutSpaces);
-                        let end = this.category + '/?' + this.valueWithoutSpaces;
-                        console.log(this.startUrlApi + end);
-                        this.getData(this.startUrlApi + end);
-                        console.log('hore');
-                        return this.startUrlApi + end;
+                            this.valueWithoutSpaces = this.value.split(' ').join(this.replacementOfSpace);
+                            console.log('space' );
 
+                        } else {
+                            this.valueWithoutSpaces = this.value;
+
+                        }
+
+                        this.endOfUrl = this.category + '/?search=' + this.valueWithoutSpaces;
+
+                        console.log('URLAPI IF IS NOT ID:  ' + this.startUrlApi + this.endOfUrl);
+                        // return this.startUrlApi + this.endOfUrl;
+                        // this.getData(this.startUrlApi + this.endOfUrl);
                     } else {
-                        let end = this.category + '/' + this.value;
-                        console.log(this.startUrlApi + end);
-                        console.log('url id');
-                        return this.startUrlApi + end;
+                        console.log('value is number');
+
+                        this.endOfUrl = this.category + '/' + this.value;
+                        console.log('URL WITH ID: ' + this.startUrlApi + this.endOfUrl);
+                        return this.startUrlApi + this.endOfUrl;
                     }
 
                 } else {
-                    this.errorMessage = 'vyplnte udaje';
+                   return this.errorMessage = 'vyplnte udaje';
                 }
             },
 
@@ -133,7 +138,6 @@
 
         created() {
             this.getData();
-
         },
 
         methods: {
@@ -155,39 +159,32 @@
             },
 
             getValueFromUrl(url) {
-                console.log(url + "VAL");
-
-                let urlWithoutSlash = url.substring(0, url.length - 1);
-                console.log('URL' + urlWithoutSlash);
-                return urlWithoutSlash.substring(urlWithoutSlash.lastIndexOf('/') + 1);
-
+                console.log( 'id ' + this.valueIsId);
+                if (this.value.match(this.regexOnlyNumbers)) {
+                    let urlWithoutSlash = url.substring(0, url.length - 1);
+                    this.valueIsId = true;
+                    return urlWithoutSlash.substring(urlWithoutSlash.lastIndexOf('/') + 1);
+                }
             },
 
             getCategoryFromUrl(url) {
-                console.log(url  );
-                let splitUrl = url.split('/');
-                return splitUrl[4];
+                if (this.value.match(this.regexOnlyNumbers)) {
+                    console.log('getcat');
+                    let splitUrl = url.split('/');
+                    return splitUrl[4];
+                }
             },
 
             getData(url) {
+                console.log(this.urlApi);
 
-
-                console.log('detail data');
-                console.log('DATAURL' + url);
-                // console.log(this.urlApi + 'APII');s
-                console.log('detail data');
-                console.log('CATEGORY' + this.category);
-                // console.log(' APIURL' + this.urlApi);
-
-                if(url){
-
-                    console.log('MAME URL');
-                } else {
-
-
+                console.log('SME V GET');
+                console.log(url);
+                console.log('val ' + this.value);
+                if (this.valueIsId) {
                     if (this.category && this.value) {
                         console.log(this.value + ' value');
-                        console.log('GEEEEEEEEEET');
+                        console.log('GEEEEEEEEEET Id');
                         this.loading = true;
                         axios.get(this.urlApi)
                             .then((response) => {
@@ -214,6 +211,32 @@
                         this.errorMessage = 'error v getData';
                         return;
                     }
+
+
+                } else {
+                    console.log(url);
+                    console.log('MAME URL ' + url);
+                    axios.get(url)
+                        .then((response) => {
+                            console.log(response);
+                            this.loading = false;
+                            this.error = false;
+                            this.data = response.data.results;
+                            this.neededUrl = response.data.results[0]['url'];
+                            this.getData(this.neededUrl);
+                        })
+                        .catch((error) => {
+                            this.loading = false;
+                            this.errorLoad = true;
+                            this.errorMessage = 'errorisko';
+
+                            // if (error.response.data.detail) {
+                            //     this.errorDetail = error.response.data.detail;
+                            //     this.errorHandle(this.errorDetail);
+                            // }
+
+                        });
+
                 }
 
 

@@ -18,13 +18,6 @@
             <label for="">
                 <select v-model="selectedValue" name="" id="" class="select" :disabled="!selectedOption">
                     <option  v-if="categorySelected" v-for="value in searchedData" :value="value" >{{value}}</option>
-                    <!--<option  v-if="categoryPeople" v-for="person in searchedData" :value="person">{{person}}</option>-->
-                    <!--<option v-if="categoryStarships" v-for="ship in searchedData" :value="ship" >{{ship}} </option>-->
-                    <!--<option v-if="categorySpecies" v-for="specie in searchedData" :value="specie" >{{specie}} </option>-->
-                    <!--<option v-if="categoryFilms" v-for="film in searchedData" :value="film" >{{film}} </option>-->
-                    <!--<option v-if="categoryPlanets" v-for="planet in searchedData" :value="planet" >{{planet}} </option>-->
-                    <!--<option v-if="categoryVehicles" v-for="vehicle in searchedData" :value="vehicle" >{{vehicle}} </option>-->
-
                 </select>
 
                 <button @click="search">Search</button>
@@ -97,8 +90,9 @@
                 axios.get(url)
                     .then((response) => {
                         let results = response.data.results;
+                        console.log(results);
 
-                        for (let pro  in results) {
+                        for (let pro in results) {
                             this.searchedData.push(results[pro][searchedProperty]);
                         }
                         let upperCasedCategory = searchedCategory.charAt(0).toUpperCase() + searchedCategory.slice(1);
