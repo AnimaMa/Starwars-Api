@@ -40,7 +40,7 @@ if(elixir.config.production) {
 }
 
 mix.browserSync({
-    proxy: 'starwars-api.local'
+    proxy: 'starwars-api.test'
 });
 mix.task('images', 'resources/assets/img/**/*.*');
 mix.task('fonts', 'resources/assets/font/**/*.*');
